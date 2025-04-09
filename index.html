@@ -279,7 +279,7 @@
             margin-bottom: 15px;
         }
 
-       
+
 
 
         /* Модальное окно */
@@ -679,7 +679,7 @@
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
             <div class="modal-title-with-reload">
-                <span class="modal-reload" onclick="closeModal();showShortByUrl();">🔄</span>
+                <span class="modal-reload" onclick="openAnotherModal()">🔄</span>
                 <h2 id="modal-title">Принцип</h2>
             </div>
             <div id="modal-description"></div>
@@ -1249,6 +1249,11 @@
             }
         }
 
+
+        function openAnotherModal() {
+            closeModal();
+            showShortByUrl();
+        }
 
         function showShortByUrl() {
             let params = new URLSearchParams(document.location.search);
