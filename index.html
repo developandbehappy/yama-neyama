@@ -279,6 +279,10 @@
             margin-bottom: 15px;
         }
 
+        .modal-reload {
+            cursor: pointer;
+        }
+
         /* Модальное окно */
         .modal {
             display: none;
@@ -665,6 +669,7 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
+            <span class="modal-reload" onclick="closeModal();showShortByUrl();">🔄</span>
             <h2 id="modal-title">Принцип</h2>
             <div id="modal-description"></div>
         </div>
@@ -1233,14 +1238,42 @@
             }
         }
 
-        let params = new URLSearchParams(document.location.search);
-        let show = params.get("showTip");
 
-        const rTip = Object.keys({ ...niyamaData, ...yamaData }).map(k => k);
-        const randomKey = rTip[Math.floor(Math.random() * rTip.length)];
-        if (show) {
-            showDetails(randomKey);
+        function showShortByUrl() {
+            let params = new URLSearchParams(document.location.search);
+            let show = params.get("showTip");
+
+            // Получаем данные о показах из localStorage или создаем новый объект, если данных нет
+            let viewStats = JSON.parse(localStorage.getItem('tipViewStats')) || {};
+
+            // Инициализация счетчиков показов для всех пунктов
+            const allTips = Object.keys({ ...niyamaData, ...yamaData });
+            allTips.forEach(tip => {
+                if (viewStats[tip] === undefined) {
+                    viewStats[tip] = 0;
+                }
+            });
+
+            if (show) {
+                // Находим пункты с минимальным количеством показов
+                const minViewCount = Math.min(...Object.values(viewStats));
+                const leastShownTips = allTips.filter(tip => viewStats[tip] === minViewCount);
+
+                // Выбираем случайный пункт из наименее показанных
+                const randomKey = leastShownTips[Math.floor(Math.random() * leastShownTips.length)];
+
+                // Увеличиваем счетчик показов для выбранного пункта
+                viewStats[randomKey]++;
+
+                // Сохраняем обновленную статистику
+                localStorage.setItem('tipViewStats', JSON.stringify(viewStats));
+
+                // Показываем подробности выбранного пункта
+                showDetails(randomKey);
+            }
         }
+        showShortByUrl();
+
         // Функция для открытия модального окна с подробной информацией о ступени восьмеричного пути
         function showPathDetails(stepNumber) {
             const modal = document.getElementById('modal');
