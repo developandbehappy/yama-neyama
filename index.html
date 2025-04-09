@@ -1252,10 +1252,10 @@
 
         function openAnotherModal() {
             closeModal();
-            showShortByUrl();
+            showShortByUrl(true);
         }
 
-        function showShortByUrl() {
+        function showShortByUrl(showWithoutParam) {
             let params = new URLSearchParams(document.location.search);
             let show = params.get("showTip");
 
@@ -1270,7 +1270,7 @@
                 }
             });
 
-            if (show) {
+            if (show || showWithoutParam) {
                 // Находим пункты с минимальным количеством показов
                 const minViewCount = Math.min(...Object.values(viewStats));
                 const leastShownTips = allTips.filter(tip => viewStats[tip] === minViewCount);
