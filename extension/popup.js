@@ -1,0 +1,1 @@
+window.location.href = "https://developandbehappy.github.io/yama-neyama/?showTip=1";
