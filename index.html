@@ -279,9 +279,8 @@
             margin-bottom: 15px;
         }
 
-        .modal-reload {
-            cursor: pointer;
-        }
+       
+
 
         /* Модальное окно */
         .modal {
@@ -298,10 +297,8 @@
 
         .modal-content {
             background-color: white;
-            margin: 50px auto;
             padding: 30px;
-            border-radius: 8px;
-            max-width: 80%;
+            max-width: 100%;
             position: relative;
         }
 
@@ -320,8 +317,20 @@
         }
 
         #modal-title {
-            margin-bottom: 20px;
             color: #0D324D;
+        }
+
+        .modal-reload {
+            cursor: pointer;
+            margin-right: 16px;
+            transform: scale(1.5);
+        }
+
+
+        .modal-title-with-reload {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         #modal-description p {
@@ -669,8 +678,10 @@
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <span class="modal-reload" onclick="closeModal();showShortByUrl();">🔄</span>
-            <h2 id="modal-title">Принцип</h2>
+            <div class="modal-title-with-reload">
+                <span class="modal-reload" onclick="closeModal();showShortByUrl();">🔄</span>
+                <h2 id="modal-title">Принцип</h2>
+            </div>
             <div id="modal-description"></div>
         </div>
     </div>
